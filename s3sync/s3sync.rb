@@ -499,6 +499,10 @@ ENDUSAGE
 					headers['Expires'] = $S3syncOptions['--expires'] if $S3syncOptions['--expires']
 					headers['Cache-Control'] = $S3syncOptions['--cache-control'] if $S3syncOptions['--cache-control']
 					fType = @path.split('.').last
+					if fType == 'gz'
+					  headers['Content-encoding'] = 'gzip'
+					  fType = @path.split('.')[-2] # selects filetype from the extension before .gz if file ends with .gz, so 'css' if file ends with 'css.gz'
+				  end
 					debug("File extension: #{fType}")
 					if defined?($mimeTypes) and fType != '' and (mType = $mimeTypes[fType]) and mType != ''
 						debug("Mime type: #{mType}")
