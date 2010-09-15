@@ -169,7 +169,7 @@ namespace :s3_asset_host do
   
   desc "Loads the S3 id and secret from the .yaml file set in CONFIG_FILENAME"
   task :load_config do
-    rails_env = ENV["RAILS_ENV"] || "production"
+    # rails_env = ENV["RAILS_ENV"] || "production"
     s3sync_config = YAML::load(File.open(CONFIG_FILENAME))
     s3sync_config.each do |key, value|
       set(key.downcase.to_sym, value)
