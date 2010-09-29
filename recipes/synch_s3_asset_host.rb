@@ -178,7 +178,7 @@ namespace :s3_asset_host do
   end
 
   desc "Synchronizes the public directory with your asset hosts."
-  task :synch_public, :roles => :web, :only => {:asset_host_syncher => true} do
+  task :synch_public, :roles => [:web, :app], :only => {:asset_host_syncher => true} do
     connect
     current_release_dir = fetch(:latest_release)
     asset_hosts.each do |host|
