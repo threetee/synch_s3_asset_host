@@ -184,8 +184,8 @@ namespace :s3_asset_host do
     asset_hosts.each do |host|
       command = "cd #{File.join(current_release_dir, 'vendor/plugins/synch_s3_asset_host/s3sync')} && "
       command += "./s3sync.rb --recursive --config-file #{File.join(current_release_dir, "config/synch_s3_asset_host.yml")} "
-      # command += "--exclude \"\\.svn|\\.DS_Store\" --public-read "
-      command += "--exclude \"\\.svn|\\.DS_Store|system\" --progress --public-read --cache-control \"public\" --expires \"#{(Time.now + 365*24*60*60).rfc2822}\" "  
+      command += "--exclude \"#{fetch(:exclude, "\\.svn|\\.DS_Store|system")}\" "
+      command += "--progress --public-read --cache-control \"public\" --expires \"#{(Time.now + 365*24*60*60).rfc2822}\" "  
       command += "--dryrun " if fetch(:dry_run, false)
       command += "#{File.join(current_release_dir, 'public')}/ #{host}:" 
       run(command)
